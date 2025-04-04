@@ -1,0 +1,106 @@
+/*
+ FINDLIBS is a tool that system programmers and others can use to inventory
+ software and other categories of items found on their system(s).  The generated
+ inventory consists of a member-list cross referenced to the datasets in which
+ those member names exist.  The 'envelope' for this inventory is defined by two
+ tables: the USER table listing the high-level qualifiers (userids) to be
+ included, and the TYPE table that defines the low-level qualifiers to be
+ examined.
+
+ There can be multiple USER tables and multiple TYPE tables, and the inventory,
+ the final output, will be different depending on which user table and which
+ type table were selected to generate the inventory.  FINDLIBS thus provides
+ roll-your-own ability to produce a cross reference of dataset-by-member in a
+ variety of patterns.
+
+ When called, FINDLIBS invites the caller to build/modify a USER table
+ containing the list of userids for which the cross-reference is to be produced.
+ (In some cases, this will be 'all users'.  It is beyond the scope of FINDLIBS
+ to suggest how, given the wide variety of installation configurations, this
+ might be accomplished.)  Then the caller is invited to build/modify a TYPE
+ table containing low-level qualifiers for the libraries to be examined.
+ Lastly, for each designated user and for each selected library for each user, a
+ list of unique member names across all the selected libraries is developed
+ along with track-backs to their containing datasets.  This inventory is written
+ to the designated XREF table which will be created new or totally replaced.
+
+ In operation, FINDLIBS calls SHOWLIBS as its last directive.  SHOWLIBS displays
+ the cross-reference table developed by FINDLIBS.
+
+ At each invocation of FINDLIBS, a caller is required to name the user table to
+ be used (i.e.: built or modified), the type table to be used (i.e.: built or
+ modified), and the cross-reference table to be produced.  An internal ISPF
+ dialog eases the specification of these basic parameters, and will be invoked
+ if even a single parameter is missing.  That means that FINDLIBS can be called
+ with NO PARAMETERS and they can ALL be collected by the dialog.
+
+ This helpful process does NOT collect the non-standard debugging directives.
+ For details regarding those directives, see the FINDLIBS HELP-text:
+    ===> tso %findlibs ?
+
+ It is thus possible to build one table of programmer userids with an
+ appropriate type table and inventory their source code libraries, build a
+ separate table of dialog developer userids with types tailored to ISPF assets
+ and inventory their panel, skeleton, and table libraries, while another
+ entirely separate table of analyst userids with appropriate type entries can be
+ used to inventory documentation libraries.  As long as SHOWLIBS is called with
+ the proper cross reference table name, it will seem to be multiple separate
+ applications performing the same general function:  creating a
+ dataset-by-member cross-reference.
+
+ As a result, the calling sequence for FINDLIBS can become quite long and
+ complex:
+    ===> tso %findlibs
+                 LOG                  /* keep the log dataset       */
+                 ISPTLIB 'jonesy.tables'      /* names the input    */
+                 ISPTABL 'psmith.tlib'        /* points to output   */
+                 USERTBL uids         /* the user table             */
+                 TYPETBL types        /* the type table             */
+                 XREFTBL xout         /* the xref output            */
+           ((    MONITOR              /* I want to watch it run...  */
+
+ An internal ISPF dialog has been built to help the caller specify each required
+ datapoint.  If FINDLIBS is called without specifying all (or even ANY) required
+ parameters, a panel is displayed to collect the missing information.
+
+ When using the command line to issue the FINDLIBS command, any of these
+ parameter elements may be specified in any order as long as each indicator (ex:
+ USERTBL) immediately precedes its value (ex: UIDS).  Although shown here in
+ UPPERCASE, case is not significant.
+
+ Debugging options (like MONITOR) are separated from the standard parameters by
+ a double open-parentheses and should be presented last after all the standard
+ parms (if any are specified).
+
+ If the ISPTLIB spec and the ISPTABL spec are the same, only one need be given.
+ For details of the calling sequence:
+    ===> tso %findlibs ?
+
+ SHOWLIBS can likewise be called stand-alone to display the current
+ cross-reference table.
+    ===> tso %showlibs FROM table ISPTLIB library
+ where 'table' names the cross-reference table to be displayed and 'library'
+ identifies the table library in which 'table' exists.  It is not necessary to
+ re-run FINDLIBS unless a refreshed output is called for.  Because FINDLIBS
+ processing is relatively intense, unnecessary re-runs should be avoided.
+
+
+ In its simplest form, application programmer Tami Jones (Userid:  TJONES)
+ wishes to develop an inventory of all of her OWN source material.  She invokes
+ FINDLIBS:
+    ===> tso %findlibs
+ which displays a parameter-collector panel on which she names her personal
+ table library (which is probably already allocated to ISPTABL as well as the
+ first DSN in ISPTLIB) and picks names for the three involved tables.  When
+ offered a (so far blank) USER table, she adds her own userid, TJONES.  When
+ offered a (so far blank) TYPE table, she adds .EXEC, .CLIST, .PLI, .FORT, and
+ .COBOL (she's multi-lingual).  FINDLIBS searches the catalog for all of her
+ datasets, discards any that are not PO or POE, develops a member list for each,
+ and produces the output table, MEMBER+DS1+DS2+...+DSn.  SHOWLIBS displays the
+ finalized cross reference table to her.
+
+ Later, she realizes that she also has a .REXX dataset that wasn't included.
+ She restarts FINDLIBS, keeps the same table names, makes no changes to the USER
+ table, but adds .REXX to the TYPE table, and sees a fresh cross reference that
+ now includes ALL of the datasets she wanted to see.
+*/

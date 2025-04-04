@@ -1,0 +1,27 @@
+
+         'FCLARKE.FINDLIBS.EXEC' - Directory
+
+
+           Usage or
+ Member    Caller      Description
+ ========  =========   =====================================
+
+ $$$#DATE  data        Download stats
+
+ #INDEX    text        Member index
+
+ @@README  text        Information about this package
+
+ @FIL1047  text        Inventory in CBT-style
+
+ DIRSTATS  subrtn      Member list with stats
+
+ DSVCSI    subrtn      Catalog Search Interface
+
+ FINDLIBS  exec        Generate a member-dataset cross-reference
+
+ MEMLIST   exec        Member list with expanded selection
+
+ SHOWLIBS  exec        Display the output of FINDLIBS
+
+ TRAPOUT   subrtn      Outtrap the TRACE output
