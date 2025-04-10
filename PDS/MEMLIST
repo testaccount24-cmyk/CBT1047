@@ -1,0 +1,29 @@
+/* REXX       MEMLIST     Edit/Browse/View a member list.
+
+*/ arg argline                         /* pro-forma quick-start      */
+address TSO
+arg parms "((" opts
+opts = Strip(opts,"T",")")
+parse var opts "TRACE"  tv  .
+parse value tv "N"  with  tv .
+rc = Trace("O"); rc = Trace(tv)
+
+parse var parms   dsn  action  .
+parse value action 'V'  with  action  .
+if Left( dsn,1 ) = "'" then,
+   dsn  = Strip( dsn,,"'" )
+else,
+   dsn  = Userid()"."dsn
+
+if Pos( "(",dsn ) > 0 then do
+   parse var dsn  dsn "(" mbrnm ")"
+   mspec = "MEMBER( "mbrnm" )"
+   end
+else mspec = ''
+
+address ISPEXEC
+"LMINIT  DATASET( '"dsn"' ) DATAID( MEMLV )"
+"MEMLIST DATAID( "memlv" )"  mspec  "DEFAULT( "action" )"
+"LMFREE  DATAID( "memlv" )"
+
+exit                                   /*@ MEMLIST                   */

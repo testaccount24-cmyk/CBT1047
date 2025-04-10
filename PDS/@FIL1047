@@ -1,0 +1,31 @@
+//***FILE1047 is by Frank Clarke of Oldsmar, Florida and provides   *   FILE1047
+//*        two REXX EXECs, FINDLIBS and SHOWLIBS, useful for        *   FILE1047
+//*        inventorying libraries (by type) across the entire       *   FILE1047
+//*        installation.                                            *   FILE1047
+//*                                                                 *   FILE1047
+//*        email:  rexxhead@yahoo.com, Frank Clarke                 *   FILE1047
+//*                                                                 *   FILE1047
+//*               'FCLARKE.FINDLIBS.EXEC' - Directory               *   FILE1047
+//*                                                                 *   FILE1047
+//*                 Usage or                                        *   FILE1047
+//*       Member    Caller      Description                         *   FILE1047
+//*       ========  =========   =================================   *   FILE1047
+//*                                                                 *   FILE1047
+//*       @@README  text        Information about this package      *   FILE1047
+//*                                                                 *   FILE1047
+//*       @FIL1047  text        Inventory in CBT-style              *   FILE1047
+//*                                                                 *   FILE1047
+//*       DIRSTATS  subrtn      Member list with stats              *   FILE1047
+//*                                                                 *   FILE1047
+//*       DSVCSI    subrtn      Catalog Search Interface            *   FILE1047
+//*                                                                 *   FILE1047
+//*       FINDLIBS  exec        Generate a member-dataset           *   FILE1047
+//*                             cross-reference                     *   FILE1047
+//*                                                                 *   FILE1047
+//*       MEMLIST   exec        Member list with expanded           *   FILE1047
+//*                             selection                           *   FILE1047
+//*                                                                 *   FILE1047
+//*       SHOWLIBS  exec        Display the output of FINDLIBS      *   FILE1047
+//*                                                                 *   FILE1047
+//*       TRAPOUT   subrtn      Outtrap the TRACE output            *   FILE1047
+//*                                                                 *   FILE1047
